@@ -11,6 +11,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Win32;
@@ -36,7 +37,7 @@ public partial class MainWindowViewModel
     private string getApplicationpath()
     {
 
-        using (RegistryKey registryKey = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Uninstall\Teams"))
+        using (RegistryKey registryKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Teams"))
         {
             var microsoftTeamsExecuteablePath = registryKey?.GetValue("InstallLocation")?.ToString();
             if (microsoftTeamsExecuteablePath != null)
@@ -58,8 +59,9 @@ public partial class MainWindowViewModel
     [RelayCommand]
     private void StartTeams()
     {
+        //MessageBox.Show("Button funktioniert");
         Process newProcess = null;
-        if (!string.IsNullOrEmpty(ApplicationPath))
+        if (!string.IsNullOrEmpty(getApplicationpath()))
         {
             newProcess = new Process
             {
